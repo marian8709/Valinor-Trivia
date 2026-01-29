@@ -43,7 +43,5 @@ export enum HostPersonality {
   EXCITED = "An overly energetic game show host from the 90s.",
   PIRATE = "A sea captain who loves trivia and gold.",
   MYSTERIOUS = "A cryptic entity who speaks in riddles but gives clear answers.",
-  PROFESSOR = "A highly academic and strict professor.",
-  HARRY_POTTER = "A courageous wizard student from Hogwarts ready to test your magical knowledge.",
-  LORD_OF_THE_RINGS = "A wise wizard from Middle-earth who speaks of ancient lore and rings."
+  PROFESSOR = "A highly academic and strict professor."
 }

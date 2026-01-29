@@ -195,7 +195,7 @@ const LiveMode: React.FC<LiveModeProps> = ({ personality, onClose, onRecordEvent
       {/* Header Info */}
       <div className="text-center space-y-1 md:space-y-2 mb-4 md:mb-8 shrink-0">
         <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-          Live Channel
+          Live Voice
         </h2>
         <div className="flex items-center justify-center gap-2 text-xs md:text-sm text-slate-400">
             <Radio size={14} className={isConnected ? "text-red-500 animate-pulse" : "text-slate-600"} />

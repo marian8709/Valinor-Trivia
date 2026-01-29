@@ -186,20 +186,17 @@ export const generateSpeech = async (text: string, personality: string): Promise
   if (p.includes('professor')) voiceName = 'Fenrir'; // Authoritative
   if (p.includes('mysterious')) voiceName = 'Aoede'; // Elegant/High
   
-  // New Personalities
-  if (p.includes('harry')) voiceName = 'Puck'; // Youthful/Standard
-  if (p.includes('rings') || p.includes('middle-earth')) voiceName = 'Fenrir'; // Deep/Wise/Wizard-like
-
-  // Sanitize text: Remove newlines, excessive whitespace, and markdown symbols to prevent 500 errors
-  // Gemini TTS can be sensitive to formatting characters
+  // Sanitize text: Remove newlines, excessive whitespace, and markdown symbols to prevent 500 errors.
+  // We also limit characters to prevent internal buffer overflows on the model side.
   const cleanText = text
-    .replace(/[*_#`~]/g, '') // Remove markdown
-    .replace(/[\r\n]+/g, ' ') // Remove newlines
-    .replace(/\s+/g, ' ')     // Collapse spaces
-    .trim();
+    .replace(/[*_#`~\[\](){}<>]/g, '') // Remove markdown and brackets
+    .replace(/[\r\n]+/g, ' ')          // Remove newlines
+    .replace(/\s+/g, ' ')              // Collapse spaces
+    .trim()
+    .slice(0, 600);                    // Truncate overly long text
 
   // If text is empty after cleaning, don't call API
-  if (!cleanText) return "";
+  if (!cleanText || cleanText.length < 2) return "";
 
   try {
     const response = await ai.models.generateContent({
@@ -225,6 +222,14 @@ export const generateSpeech = async (text: string, personality: string): Promise
       console.warn("TTS Quota Exceeded. Audio playback skipped.");
       return "";
     }
+    
+    // Handle 500 Internal Error - sometimes retrying with shorter text helps, 
+    // but often it's better to just fail silently to avoid bad UX of loading forever.
+    if (error.status === 500 || error.message?.includes('Internal error')) {
+        console.warn("TTS Internal Error (500). Skipping audio.");
+        return "";
+    }
+
     console.error("Error generating speech:", error);
     return "";
   }

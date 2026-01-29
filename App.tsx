@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AppState, HostPersonality, FeedbackState, Difficulty, AnalyticsEvent } from './types';
 import { 
   Mic, Sparkles, MessageCircle, 
-  Bot, Zap, Skull, HelpCircle, GraduationCap, Wand2, Crown, 
+  Bot, Zap, Skull, HelpCircle, GraduationCap, 
   ChevronLeft, Play, Atom, BarChart3, LineChart, Settings2, Download, X
 } from 'lucide-react';
 import TriviaMode from './components/TriviaMode';
@@ -44,18 +44,6 @@ const HOST_THEMES: Record<string, { icon: React.ElementType, color: string, grad
     color: "text-blue-400", 
     gradient: "from-blue-500/20 to-cyan-500/5",
     sound: 'notification'
-  },
-  [HostPersonality.HARRY_POTTER]: { 
-    icon: Wand2, 
-    color: "text-emerald-400", 
-    gradient: "from-emerald-600/20 to-slate-800/50",
-    sound: 'magic'
-  },
-  [HostPersonality.LORD_OF_THE_RINGS]: { 
-    icon: Crown, 
-    color: "text-amber-300", 
-    gradient: "from-amber-400/20 to-yellow-900/20",
-    sound: 'epic'
   }
 };
 
@@ -66,8 +54,6 @@ const HOST_PALETTES: Record<string, string[]> = {
   [HostPersonality.PIRATE]: ['#991b1b', '#7f1d1d', '#450a0a'], // Red/Deep Amber
   [HostPersonality.MYSTERIOUS]: ['#4338ca', '#312e81', '#1e1b4b'], // Indigo/Violet (Default)
   [HostPersonality.PROFESSOR]: ['#2563eb', '#1e40af', '#172554'], // Blue/Dark Blue
-  [HostPersonality.HARRY_POTTER]: ['#059669', '#065f46', '#022c22'], // Emerald/Dark Green
-  [HostPersonality.LORD_OF_THE_RINGS]: ['#d97706', '#92400e', '#451a03'], // Gold/Bronze/Brown
 };
 
 const ValinorLogo = () => (
@@ -85,7 +71,15 @@ const App: React.FC = () => {
         const saved = localStorage.getItem('valinor_v1');
         if (saved) {
             const parsed = JSON.parse(saved);
-            return { ...parsed, screen: parsed.screen === 'trivia' || parsed.screen === 'live' ? 'menu' : parsed.screen };
+            
+            // Check if the saved personality still exists in our enum, otherwise reset
+            const isValidPersonality = Object.values(HostPersonality).includes(parsed.personality);
+            const cleanState = { 
+                ...parsed, 
+                screen: parsed.screen === 'trivia' || parsed.screen === 'live' ? 'menu' : parsed.screen,
+                personality: isValidPersonality ? parsed.personality : HostPersonality.EXCITED
+            };
+            return cleanState;
         }
     } catch (e) {
         console.error("Failed to load state", e);

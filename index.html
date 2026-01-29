@@ -6,6 +6,9 @@
     <meta name="theme-color" content="#020617" />
     <title>Valinor</title>
     <link rel="manifest" href="/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       /* Custom scrollbar for dark theme */
@@ -25,6 +28,7 @@
       body {
         background-color: #020617; /* slate-950 */
         color: #f8fafc; /* slate-50 */
+        font-family: 'Outfit', sans-serif;
         overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile */
       }
       
@@ -67,6 +71,23 @@
       }
       .animate-exit {
         animation: slide-up-fade-out 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+      }
+
+      /* Idle Animations */
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-6px); }
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      @keyframes subtle-pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+      .animate-subtle-pulse {
+        animation: subtle-pulse 3s ease-in-out infinite;
       }
     </style>
   <script type="importmap">
