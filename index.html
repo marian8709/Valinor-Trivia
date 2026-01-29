@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#020617" />
+    <title>Valinor</title>
+    <link rel="manifest" href="/manifest.json" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom scrollbar for dark theme */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+      body {
+        background-color: #020617; /* slate-950 */
+        color: #f8fafc; /* slate-50 */
+        overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile */
+      }
+      
+      /* Tech Grid Background */
+      .bg-grid-pattern {
+        background-size: 50px 50px;
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+        -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+      }
+
+      /* Logo Breathing Animation - Matching Logo Greens */
+      @keyframes breathe-colors {
+        0%, 100% { 
+            color: #4ade80; /* green-400 */
+            text-shadow: 0 0 10px rgba(74, 222, 128, 0.3); 
+        }
+        50% { 
+            color: #16a34a; /* green-600 */
+            text-shadow: 0 0 25px rgba(22, 163, 74, 0.6); 
+        } 
+      }
+      .animate-logo-breath {
+        animation: breathe-colors 12s infinite ease-in-out;
+      }
+
+      /* Card Transitions */
+      @keyframes slide-up-fade-in {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes slide-up-fade-out {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-30px); }
+      }
+      .animate-enter {
+        animation: slide-up-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .animate-exit {
+        animation: slide-up-fade-out 0.4s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

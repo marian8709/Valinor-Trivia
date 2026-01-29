@@ -1,0 +1,7 @@
+{
+  "name": "Valinor Trivia",
+  "description": "A high-tech trivia game featuring a dynamic AI host with customizable personalities, real-time voice chat, and accurate search-grounded questions.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
